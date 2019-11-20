@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 class WelcomeScreen extends Component {
   render() {
@@ -7,14 +7,14 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         <Text>WelcomeScreen</Text>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-});
+    flex: 1
+  }
+})
 
-export {WelcomeScreen};
+export { WelcomeScreen }

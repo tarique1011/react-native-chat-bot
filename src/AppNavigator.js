@@ -1,21 +1,21 @@
-import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
-import {createAppContainer} from 'react-navigation';
-import {WelcomeScreen, ChatScreen} from './Screens';
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
+import { createAppContainer } from 'react-navigation'
+import { WelcomeScreen, ChatScreen } from './Screens'
 
 const RootNavigation = createAnimatedSwitchNavigator(
   {
     Welcome: {
-      screen: WelcomeScreen,
+      screen: WelcomeScreen
     },
     Chat: {
-      screen: ChatScreen,
-    },
+      screen: ChatScreen
+    }
   },
   {
-    initialRouteName: 'Chat',
-  },
-);
+    initialRouteName: 'Chat'
+  }
+)
 
-const AppNavigator = createAppContainer(RootNavigation);
+const AppNavigator = createAppContainer(RootNavigation)
 
-export default AppNavigator;
+export default AppNavigator

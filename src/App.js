@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
-import AppNavigator from './AppNavigator';
+import React, { Component } from 'react'
+import { View, StyleSheet } from 'react-native'
+import AppNavigator from './AppNavigator'
 
 class App extends Component {
   render() {
@@ -8,13 +8,13 @@ class App extends Component {
       <View style={styles.container}>
         <AppNavigator />
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-});
-export default App;
+    flex: 1
+  }
+})
+export default App
