@@ -23,21 +23,32 @@ class ChatScreen extends Component {
           userType: 'bot',
           message: 'Hey there user!'
         }
-      ]
+      ],
+      currentMessage: ''
     }
   }
+
+  handleSend() {
+    this.state.messages.push({
+      userType: 'user',
+      message: this.state.currentMessage
+    })
+    this.setState({ currentMessage: '' })
+  }
+
   renderButtonInputBar() {
     return (
       <View style={styles.bottomInputBar}>
-        <TextInput placeholder="Type Something..." style={styles.inputBar} />
-        <TouchableOpacity style={styles.sendButton}>
-          <Icon
-            style={styles.sendIcon}
-            name="md-send"
-            size={25}
-            color="white"
-          />
-        </TouchableOpacity>
+        <TextInput
+          value={this.state.currentMessage}
+          onChangeText={currentMessage => this.setState({ currentMessage })}
+          placeholder="Type Something..."
+          style={styles.inputBar}
+        />
+        <TouchableOpacity
+          onPress={() => this.handleSend()}
+          style={styles.sendButton}
+        />
       </View>
     )
   }
@@ -48,7 +59,9 @@ class ChatScreen extends Component {
         <View style={styles.chatView}>
           <FlatList
             data={this.state.messages}
-            renderItem={({ item }) => <MessageBox message={item.message} />}
+            renderItem={({ item }) => (
+              <MessageBox userType={item.userType} message={item.message} />
+            )}
           />
         </View>
         {this.renderButtonInputBar()}
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#4FCE5D',
+    backgroundColor: '#1F8EFE',
     justifyContent: 'center',
     alignItems: 'center'
   },
