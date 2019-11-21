@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 
 class MessageBox extends Component {
   render() {
-    const { message, userType } = this.props
+    const { children, userType } = this.props
     return (
       <View
         style={[
@@ -11,7 +11,7 @@ class MessageBox extends Component {
           userType === 'user' ? styles.userMessageBox : styles.botMessageBox
         ]}
       >
-        <Text style={styles.messageText}>{message}</Text>
+        <Text style={styles.messageText}>{children}</Text>
       </View>
     )
   }
@@ -20,19 +20,22 @@ class MessageBox extends Component {
 const styles = StyleSheet.create({
   messageBox: {
     maxWidth: '60%',
-    borderRadius: 10,
+    borderRadius: 15,
     justifyContent: 'center',
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginVertical: 10
+    marginVertical: 10,
+    minHeight: 30
   },
   userMessageBox: {
     backgroundColor: '#1F8EFE',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    borderBottomRightRadius: 0
   },
   botMessageBox: {
     backgroundColor: '#A3A3A3',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    borderBottomLeftRadius: 0
   },
   messageText: {
     color: 'white',

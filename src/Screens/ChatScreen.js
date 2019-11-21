@@ -9,22 +9,16 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { MessageBox } from '../Components'
+import LottieView from 'lottie-react-native'
 
 class ChatScreen extends Component {
   constructor() {
     super()
     this.state = {
-      messages: [
-        {
-          userType: 'user',
-          message: 'Hey there!'
-        },
-        {
-          userType: 'bot',
-          message: 'Hey there user!'
-        }
-      ],
-      currentMessage: ''
+      messages: [],
+      messageTemplates: ['Hahahahha', 'Sahi mein!', 'Tagda'],
+      currentMessage: '',
+      waiting: false
     }
   }
 
@@ -33,7 +27,18 @@ class ChatScreen extends Component {
       userType: 'user',
       message: this.state.currentMessage
     })
-    this.setState({ currentMessage: '' })
+    this.setState({ currentMessage: '', waiting: true })
+
+    const random = Math.floor(Math.random() * 10)
+    const message = this.state.messageTemplates[random % 3]
+
+    setTimeout(() => {
+      this.state.messages.push({
+        userType: 'bot',
+        message
+      })
+      this.setState({ waiting: false })
+    }, 3000)
   }
 
   renderButtonInputBar() {
@@ -53,15 +58,50 @@ class ChatScreen extends Component {
     )
   }
 
+  renderFooter() {
+    if (this.state.waiting) {
+      return (
+        <View
+          style={{
+            width: '20%',
+            height: 30,
+            backgroundColor: '#A3A3A3',
+            borderRadius: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderBottomLeftRadius: 0,
+            marginVertical: 5
+          }}
+        >
+          <LottieView
+            style={{
+              height: 50
+            }}
+            source={require('./loader.json')}
+            autoPlay
+            loop
+          />
+        </View>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.chatView}>
           <FlatList
+            ref={ref => (this.flatList = ref)}
+            onContentSizeChange={() =>
+              this.flatList.scrollToEnd({ animated: true })
+            }
             data={this.state.messages}
             renderItem={({ item }) => (
-              <MessageBox userType={item.userType} message={item.message} />
+              <MessageBox userType={item.userType}>{item.message}</MessageBox>
             )}
+            ListFooterComponent={this.renderFooter()}
           />
         </View>
         {this.renderButtonInputBar()}
@@ -76,8 +116,8 @@ const styles = StyleSheet.create({
   },
   chatView: {
     height: '90%',
-    paddingTop: '5%',
-    paddingHorizontal: '3%'
+    paddingVertical: '5%',
+    paddingHorizontal: '5%'
   },
   bottomInputBar: {
     height: '10%',
